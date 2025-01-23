@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '10.0'
+
+target 'Moisture_Example' do
+  pod 'Moisture', :path => '../'
+
+  target 'Moisture_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
