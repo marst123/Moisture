@@ -33,22 +33,19 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '13.0'
 
   # 主模块的独立文件
-  s.source_files = 'Moisture/Classes/**'  # 匹配 unimp 目录下的所有 Swift 文件
+  s.source_files = 'Moisture/Classes/**/*'  # 匹配 unimp 目录下的所有 Swift 文件
   
-  s.subspec 'Extensions' do |extension|
-    extension.source_files = 'Moisture/Classes/Extensions/**/*'
-  end
-  
-  s.subspec 'Protocols' do |protocol|
-    protocol.source_files = 'Moisture/Classes/Protocols/**/*'
+  s.subspec 'Common' do |common|
+    common.source_files = 'Moisture/Classes/Common/**/*'
   end
   
   s.subspec 'Rx' do |rx|
     rx.source_files = 'Moisture/Classes/Rx/**/*'
+    rx.dependency 'Moisture/Common'
     rx.dependency 'RxCocoa'
     rx.dependency 'RxSwift'
     rx.dependency 'RxGesture'
-    rx.dependency 'RxDataSources', '~> 4.0'
+    rx.dependency 'RxDataSources'
   end
   
   

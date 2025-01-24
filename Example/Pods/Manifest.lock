@@ -1,29 +1,28 @@
 PODS:
-  - Differentiator (4.0.1)
+  - Differentiator (5.0.0)
   - Moisture (0.1.0):
-    - Moisture/Extensions (= 0.1.0)
-    - Moisture/Protocols (= 0.1.0)
+    - Moisture/Common (= 0.1.0)
     - Moisture/Rx (= 0.1.0)
-  - Moisture/Extensions (0.1.0)
-  - Moisture/Protocols (0.1.0)
+  - Moisture/Common (0.1.0)
   - Moisture/Rx (0.1.0):
+    - Moisture/Common
     - RxCocoa
-    - RxDataSources (~> 4.0)
+    - RxDataSources
     - RxGesture
     - RxSwift
-  - RxCocoa (5.1.3):
-    - RxRelay (~> 5)
-    - RxSwift (~> 5)
-  - RxDataSources (4.0.1):
-    - Differentiator (~> 4.0)
-    - RxCocoa (~> 5.0)
-    - RxSwift (~> 5.0)
-  - RxGesture (3.0.2):
-    - RxCocoa (~> 5.1)
-    - RxSwift (~> 5.1)
-  - RxRelay (5.1.3):
-    - RxSwift (~> 5)
-  - RxSwift (5.1.3)
+  - RxCocoa (6.8.0):
+    - RxRelay (= 6.8.0)
+    - RxSwift (= 6.8.0)
+  - RxDataSources (5.0.0):
+    - Differentiator (~> 5.0)
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxGesture (4.0.4):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxRelay (6.8.0):
+    - RxSwift (= 6.8.0)
+  - RxSwift (6.8.0)
 
 DEPENDENCIES:
   - Moisture (from `../`)
@@ -42,13 +41,13 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Differentiator: 886080237d9f87f322641dedbc5be257061b0602
-  Moisture: 386b93bbc198e0a0c1440dc13262795d703a2cc0
-  RxCocoa: e2ed092d5432e4296aa818021d27de4090ac0354
-  RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
-  RxGesture: d6bd7447ca3a596c7a9702a6a2b6a2bb5d8bae54
-  RxRelay: 5a18c2eb2d68326ebaf0112f80d837ae41b92b97
-  RxSwift: 915abbdfb62214aa89ccd0b194d44fb478019b27
+  Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
+  Moisture: 2da6ce407ea61b08a82e3d4d50665d4af649248e
+  RxCocoa: 2d33c1e1e5d66492052ad46b11024ae287572880
+  RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
+  RxGesture: f3efb47ed2d26a8082f7b660d4a59970e275a7f8
+  RxRelay: 335c78b926a2aea8d863a6d25f1ed3b5ad8e8705
+  RxSwift: 4e28be97cbcfeee614af26d83415febbf2bf6f45
 
 PODFILE CHECKSUM: 1d8ee72c5cb1133b5173e97c559521fed639c5ad
 

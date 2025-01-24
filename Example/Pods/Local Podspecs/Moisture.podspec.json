@@ -21,26 +21,21 @@
   "platforms": {
     "ios": "13.0"
   },
-  "source_files": "Moisture/Classes/**",
+  "source_files": "Moisture/Classes/**/*",
   "subspecs": [
     {
-      "name": "Extensions",
-      "source_files": "Moisture/Classes/Extensions/**/*"
-    },
-    {
-      "name": "Protocols",
-      "source_files": "Moisture/Classes/Protocols/**/*"
+      "name": "Common",
+      "source_files": "Moisture/Classes/Common/**/*"
     },
     {
       "name": "Rx",
       "source_files": "Moisture/Classes/Rx/**/*",
       "dependencies": {
+        "Moisture/Common": [],
         "RxCocoa": [],
         "RxSwift": [],
         "RxGesture": [],
-        "RxDataSources": [
-          "~> 4.0"
-        ]
+        "RxDataSources": []
       }
     }
   ],
