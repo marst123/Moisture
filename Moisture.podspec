@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Moisture'
-  s.version          = '0.1.0'
+  s.version          = '0.1.002'
   s.summary          = 'Personal base library supporting Swift syntax.'
 
 # This description is used to generate tags and improve search results.
