@@ -33,7 +33,7 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '13.0'
 
   # 主模块的独立文件
-  s.source_files = 'Moisture/Classes/**/*'  # 匹配 unimp 目录下的所有 Swift 文件
+#  s.source_files = 'Moisture/Classes/**/*'  # 匹配 unimp 目录下的所有 Swift 文件
   
   s.subspec 'Common' do |common|
     common.source_files = 'Moisture/Classes/Common/**/*'
