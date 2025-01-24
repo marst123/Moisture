@@ -1,7 +1,7 @@
 {
   "name": "Moisture",
   "version": "0.1.0",
-  "summary": "A short description of Moisture.",
+  "summary": "Personal base library supporting Swift syntax.",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/marst123/Moisture",
   "license": {
