@@ -1,0 +1,48 @@
+{
+  "name": "Moisture",
+  "version": "0.1.0",
+  "summary": "A short description of Moisture.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/marst123/Moisture",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "marst123": "tianlan2325@qq.com"
+  },
+  "source": {
+    "git": "https://github.com/marst123/Moisture.git",
+    "tag": "0.1.0"
+  },
+  "swift_versions": [
+    "5.0"
+  ],
+  "platforms": {
+    "ios": "13.0"
+  },
+  "source_files": "Moisture/Classes/**",
+  "subspecs": [
+    {
+      "name": "Extensions",
+      "source_files": "Moisture/Classes/Extensions/**/*"
+    },
+    {
+      "name": "Protocols",
+      "source_files": "Moisture/Classes/Protocols/**/*"
+    },
+    {
+      "name": "Rx",
+      "source_files": "Moisture/Classes/Rx/**/*",
+      "dependencies": {
+        "RxCocoa": [],
+        "RxSwift": [],
+        "RxGesture": [],
+        "RxDataSources": [
+          "~> 4.0"
+        ]
+      }
+    }
+  ],
+  "swift_version": "5.0"
+}

@@ -28,9 +28,29 @@ TODO: Add long description of the pod here.
   s.source           = { :git => 'https://github.com/marst123/Moisture.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '10.0'
+  s.swift_versions = ['5.0']
+  
+  s.ios.deployment_target = '13.0'
 
-  s.source_files = 'Moisture/Classes/**/*'
+  # 主模块的独立文件
+  s.source_files = 'Moisture/Classes/**'  # 匹配 unimp 目录下的所有 Swift 文件
+  
+  s.subspec 'Extensions' do |extension|
+    extension.source_files = 'Moisture/Classes/Extensions/**/*'
+  end
+  
+  s.subspec 'Protocols' do |protocol|
+    protocol.source_files = 'Moisture/Classes/Protocols/**/*'
+  end
+  
+  s.subspec 'Rx' do |rx|
+    rx.source_files = 'Moisture/Classes/Rx/**/*'
+    rx.dependency 'RxCocoa'
+    rx.dependency 'RxSwift'
+    rx.dependency 'RxGesture'
+    rx.dependency 'RxDataSources', '~> 4.0'
+  end
+  
   
   # s.resource_bundles = {
   #   'Moisture' => ['Moisture/Assets/*.png']

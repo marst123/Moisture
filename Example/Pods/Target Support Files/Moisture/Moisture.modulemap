@@ -1,0 +1,6 @@
+framework module Moisture {
+  umbrella header "Moisture-umbrella.h"
+
+  export *
+  module * { export * }
+}
