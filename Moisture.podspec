@@ -38,25 +38,17 @@ TODO: Add long description of the pod here.
   # 主模块的独立文件
 #  s.source_files = 'Moisture/Classes/**/*'  # 匹配 unimp 目录下的所有 Swift 文件
   
-  s.subspec 'Common' do |common|
-    common.source_files = 'Moisture/Classes/Common/**/*'
+  s.subspec 'Common' do |ss|
+    ss.source_files = 'Moisture/Classes/Common/**/*'
   end
   
-  s.subspec 'Rx' do |rx|
-    rx.source_files = 'Moisture/Classes/Rx/**/*'
-    rx.dependency 'Moisture/Common'
-    rx.dependency 'RxCocoa'
-    rx.dependency 'RxSwift'
-    rx.dependency 'RxGesture'
-    rx.dependency 'RxDataSources'
+  s.subspec 'Rx' do |ss|
+    ss.source_files = 'Moisture/Classes/Rx/**/*'
+    ss.dependency 'Moisture/Common'
+    ss.dependency 'RxCocoa'
+    ss.dependency 'RxSwift'
+    ss.dependency 'RxGesture'
+    ss.dependency 'RxDataSources'
   end
-  
-  
-  # s.resource_bundles = {
-  #   'Moisture' => ['Moisture/Assets/*.png']
-  # }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
 end

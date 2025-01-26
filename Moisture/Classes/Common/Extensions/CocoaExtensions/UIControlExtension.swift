@@ -17,7 +17,7 @@ public class SingleActionClosureWrapper: NSObject {
 
 public extension UIControl {
     
-    /// 添加用户事件
+    /// Moisture: 添加用户事件 / Add a user event
     func setAction(event: UIControl.Event = .touchUpInside, action: @escaping ControlActionClosure) {
         objc_setAssociatedObject(self, &ActionClosure_Key, SingleActionClosureWrapper(closure: action), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         addTarget(self, action: #selector(handleSingleAction(sender:)), for: event)
@@ -37,7 +37,7 @@ public extension UIControl {
         static var identifier_Key = "buttonIdentifier"
     }
     
-    /// 添加一个名为 "identifier" 的属性标识符
+    /// Moisture: 添加一个名为 "identifier" 的属性标识符 / Add an "identifier" propert
     var identifier: String? {
         get {
             return objc_getAssociatedObject(self, &AssociatedKeys.identifier_Key) as? String

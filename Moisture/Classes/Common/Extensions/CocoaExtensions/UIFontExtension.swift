@@ -45,9 +45,9 @@ public enum FontWeightStyle {
 // MARK: - UIFont Extension to simplify usage
 
 public extension UIFont {
-    
-    // 静态方法让调用变得更简洁，
-    // 整体思想 是不在系统扩展上直接操作，减少对于系统api层面的代码冗余;并且按照了工厂设计模式来进行设计
+    /// Moisture: 使用字体样式设置字体 / Use font styles to set fonts
+    /// 静态方法让调用变得更简洁，
+    /// 整体思想 是不在系统扩展上直接操作，减少对于系统api层面的代码冗余;并且按照了工厂设计模式来进行设计
     class func font(_ state: FontWeightStyle) -> UIFont {
         return state.font
     }

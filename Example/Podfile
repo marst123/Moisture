@@ -4,8 +4,10 @@ platform :ios, '13.0'
 
 target 'Moisture_Example' do
 
-  pod 'Moisture', :path => '../'
-
+#  pod 'Moisture', :path => '../'
+#  
+  pod 'Moisture/Rx', :path => '../'
+  
   target 'Moisture_Tests' do
     inherit! :search_paths
 

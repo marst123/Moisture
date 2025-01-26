@@ -11,25 +11,25 @@ import RxSwift
 import RxCocoa
 import RxGesture
 
-extension Reactive where Base: UIView {
+public extension Reactive where Base: UIView {
     func tap() -> Observable<Void> {
         return tapGesture().when(.recognized).mapToVoid()
     }
 }
 
-protocol OptionalType {
+public protocol OptionalType {
     associatedtype Wrapped
 
     var value: Wrapped? { get }
 }
 
 extension Optional: OptionalType {
-    var value: Wrapped? {
+    public var value: Wrapped? {
         return self
     }
 }
 
-extension Observable where Element: OptionalType {
+public extension Observable where Element: OptionalType {
     func filterNil() -> Observable<Element.Wrapped> {
         return flatMap { (element) -> Observable<Element.Wrapped> in
             if let value = element.value {
@@ -57,15 +57,15 @@ extension Observable where Element: OptionalType {
     }
 }
 
-protocol BooleanType {
+public protocol BooleanType {
     var boolValue: Bool { get }
 }
 extension Bool: BooleanType {
-    var boolValue: Bool { return self }
+    public var boolValue: Bool { return self }
 }
 
 // Maps true to false and vice versa
-extension Observable where Element: BooleanType {
+public extension Observable where Element: BooleanType {
     func not() -> Observable<Bool> {
         return self.map { input in
             return !input.boolValue
@@ -73,7 +73,7 @@ extension Observable where Element: BooleanType {
     }
 }
 
-extension Observable where Element: Equatable {
+public extension Observable where Element: Equatable {
     func ignore(value: Element) -> Observable<Element> {
         return filter { (selfE) -> Bool in
             return value != selfE
@@ -81,20 +81,20 @@ extension Observable where Element: Equatable {
     }
 }
 
-extension ObservableType where Element == Bool {
+public extension ObservableType where Element == Bool {
     /// Boolean not operator
     public func not() -> Observable<Bool> {
         return self.map(!)
     }
 }
 
-extension SharedSequenceConvertibleType {
+public extension SharedSequenceConvertibleType {
     func mapToVoid() -> SharedSequence<SharingStrategy, Void> {
         return map { _ in }
     }
 }
 
-extension ObservableType {
+public extension ObservableType {
 
     func catchErrorJustComplete() -> Observable<Element> {
         return catchError { _ in
@@ -115,7 +115,7 @@ extension ObservableType {
 }
 
 //https://gist.github.com/brocoo/aaabf12c6c2b13d292f43c971ab91dfa
-extension Reactive where Base: UIScrollView {
+public extension Reactive where Base: UIScrollView {
     public var reachedBottom: Observable<Void> {
         let scrollView = self.base as UIScrollView
         return self.contentOffset.flatMap { [weak scrollView] (contentOffset) -> Observable<Void> in
@@ -132,7 +132,7 @@ extension Reactive where Base: UIScrollView {
 
 infix operator <-> : DefaultPrecedence
 
-func nonMarkedText(_ textInput: UITextInput) -> String? {
+public func nonMarkedText(_ textInput: UITextInput) -> String? {
     let start = textInput.beginningOfDocument
     let end = textInput.endOfDocument
 
@@ -153,7 +153,7 @@ func nonMarkedText(_ textInput: UITextInput) -> String? {
     return (textInput.text(in: startRange) ?? "") + (textInput.text(in: endRange) ?? "")
 }
 
-func <-> <Base>(textInput: TextInput<Base>, variable: BehaviorRelay<String>) -> Disposable {
+public func <-> <Base>(textInput: TextInput<Base>, variable: BehaviorRelay<String>) -> Disposable {
     let bindToUIDisposable = variable.asObservable()
         .bind(to: textInput.text)
     let bindToVariable = textInput.text
@@ -185,7 +185,7 @@ func <-> <Base>(textInput: TextInput<Base>, variable: BehaviorRelay<String>) -> 
     return Disposables.create(bindToUIDisposable, bindToVariable)
 }
 
-func <-> <T>(property: ControlProperty<T>, variable: BehaviorRelay<T>) -> Disposable {
+public func <-> <T>(property: ControlProperty<T>, variable: BehaviorRelay<T>) -> Disposable {
     if T.self == String.self {
         #if DEBUG
         fatalError("It is ok to delete this message, but this is here to warn that you are maybe trying to bind to some `rx.text` property directly to variable.\n" +

@@ -2,10 +2,10 @@ import UIKit
 
 public extension UIWindow {
     
-    /// 获得顶层控制器
+    /// Moisture: 获得顶层控制器 / Get the top level controller
     var topViewController: UIViewController? {
         
-        // 当前最顶层控制器
+        /// 当前最顶层控制器
         var currentViewController: UIViewController? = {
             var topController = rootViewController
             // 通过循环不断获得上层 "被呈现视图控制器"

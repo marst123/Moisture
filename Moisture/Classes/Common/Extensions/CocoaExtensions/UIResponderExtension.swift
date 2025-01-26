@@ -1,9 +1,9 @@
 import UIKit
 
 
-extension UIResponder {
+public extension UIResponder {
     
-    /// 获取响应链信息
+    /// Moisture: 获取响应链信息 / Get the response chain information
     func responderChain() -> String {
         var nextResponder = self.next
         var chainInfo = "Responder Chain:\n"

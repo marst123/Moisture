@@ -4,7 +4,9 @@ import ObjectiveC
 
 fileprivate var disposeBagContext: UInt8 = 0
 
-extension Reactive where Base: AnyObject {
+public extension Reactive where Base: AnyObject {
+    
+    /// Moisture: 同步锁
     func synchronizedBag<T>( _ action: () -> T) -> T {
         objc_sync_enter(self.base)
         let result = action()
@@ -15,7 +17,7 @@ extension Reactive where Base: AnyObject {
 
 public extension Reactive where Base: AnyObject {
 
-    /// a unique DisposeBag that is related to the Reactive.Base instance only for Reference type
+    /// Moisture: a unique DisposeBag that is related to the Reactive.Base instance only for Reference type
     var disposeBag: DisposeBag {
         get {
             return synchronizedBag {

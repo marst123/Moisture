@@ -28,7 +28,7 @@ public extension UIImage {
         }
     }
     
-    /// 使用图片名称 - 获取图片
+    /// Moisture: 使用图片来源类型获取图片 / Get image using the ImageSource type
     class func image(for source: ImageSource) -> UIImage? {
         return source.image
     }

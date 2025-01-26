@@ -6,6 +6,7 @@ import UIKit
 
 extension UIColor {
     
+    
     public convenience init(hexString: String) {
         let hexString = hexString.trimmingCharacters(in: .whitespacesAndNewlines)
         let scanner = Scanner(string: hexString)
@@ -54,16 +55,12 @@ extension UIColor {
         self.init(red: red, green: green, blue: blue, alpha: alpha)
     }
     
-    
+    /// Moisture: 转换为 Hex 字符串 / Convert to Hex String
     public final func toHexString() -> String {
         return String(format: "#%06x", toHex())
     }
     
-    /**
-    Returns the color representation as an integer.
-    
-    - returns: A UInt32 that represents the hexa-decimal color.
-    */
+    /// Moisture: 返回颜色的十六进制整数表示 / Returns the color representation as an integer.
     public final func toHex() -> UInt32 {
         func roundToHex(_ x: CGFloat) -> UInt32 {
             let rounded: CGFloat = round(x * 255)
@@ -77,7 +74,7 @@ extension UIColor {
         return colorToInt
     }
     
-    
+    /// Moisture: 获取 RGBA 组件 / Get RGBA components
     public final func toRGBAComponents() -> (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
         var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
         getRed(&r, green: &g, blue: &b, alpha: &a)
@@ -90,12 +87,15 @@ extension UIColor {
 
 public extension UIColor {
 
+    
+    /// Moisture: 从十六进制字符串创建 UIColor / Create UIColor from hex string
     class func hex(_ color: String, alpha: CGFloat = 1) -> UIColor {
-        return Flower_ColorMode.hex(color, alpha).color
+        return ColorFormat.hex(color, alpha).color
     }
     
+    /// Moisture: 从 RGB 值创建 UIColor / Create UIColor from RGB values
     class func rgb(_ r: CGFloat, _ g: CGFloat, _ b: CGFloat,_ alpha: CGFloat) -> UIColor {
-        return Flower_ColorMode.rgb(r, g, b, alpha).color
+        return ColorFormat.rgb(r, g, b, alpha).color
     }
     
 }
@@ -105,12 +105,14 @@ public extension UIColor {
 
 public extension CGColor {
     
+    /// Moisture: 从十六进制字符串创建 CGColor / Create CGColor from hex string
     class func hexCG(_ color: String, alpha: CGFloat = 1) -> CGColor {
-        return Flower_ColorMode.hex(color, alpha).color.cgColor
+        return ColorFormat.hex(color, alpha).color.cgColor
     }
     
+    /// Moisture: 从 RGB 值创建 CGColor / Create CGColor from RGB values
     class func rgbCG(_ r: CGFloat, _ g: CGFloat, _ b: CGFloat,_ alpha: CGFloat) -> CGColor {
-        return Flower_ColorMode.rgb(r, g, b, alpha).color.cgColor
+        return ColorFormat.rgb(r, g, b, alpha).color.cgColor
     }
     
 }
@@ -120,6 +122,7 @@ public extension CGColor {
 
 extension UIColor {
     
+    /// Moisture: 将 UIColor 转换为 UIImage / Convert UIColor to UIImage
     public func toImage() -> UIImage {
         let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
         UIGraphicsBeginImageContext(rect.size)
@@ -132,12 +135,14 @@ extension UIColor {
     }
 }
 
-// MARK: - ColorMode
+// MARK: - ColorMod
 
-public enum Flower_ColorMode {
+public enum ColorFormat {
     
+    /// Moisture: RGB 格式 / RGB format
     case rgb(CGFloat, CGFloat, CGFloat, CGFloat)
     
+    /// Moisture: Hex 格式 / Hex format
     case hex(String, CGFloat)
     
     public var color: UIColor {

@@ -20,7 +20,7 @@ public class GestureClosureWrapper: NSObject {
 
 public extension UIView {
     
-    /// add UIImage
+    /// Moisture： 在View上下文添加Image图像 / Add Image to UIView Context
     var addContextImage: UIImage? {
         get {
             return objc_getAssociatedObject(self, &AddImage_Key) as? UIImage
@@ -42,13 +42,14 @@ public extension UIView {
 
 public extension UIView {
     
-    /// add UIView
+    /// Moisture: 添加单个视图 / Add a single view
     @discardableResult
     func add(subview: UIView) -> Self {
         addSubview(subview)
         return self
     }
     
+    /// Moisture: 添加多个视图 / Adding Multiple Views
     func add(_ layers: UIView...) {
         layers.forEach { addSubview($0) }
     }
@@ -89,25 +90,25 @@ extension UIView: UIGestureRecognizerDelegate {
         }
     }
     
-    /// 移除手势
+    /// Moisture: 移除手势 / Remove Gesture
     @discardableResult
-    func removeGesture(_ recognizer: UIGestureRecognizer) -> Self {
+    public func removeGesture(_ recognizer: UIGestureRecognizer) -> Self {
         removeGestureRecognizer(recognizer)
         return self
     }
     
-    /// 移除手势组
+    /// Moisture: 移除手势组 / Remove a gesture group
     @discardableResult
-    func removeGestures(_ recognizers: [UIGestureRecognizer]) -> Self {
+    public func removeGestures(_ recognizers: [UIGestureRecognizer]) -> Self {
         for recognizer in recognizers {
             removeGestureRecognizer(recognizer)
         }
         return self
     }
     
-    /// 添加任意手势
+    /// Moisture: 添加任意手势 / Add any gesture
     @discardableResult
-    func addGesture(_ recognizer: UIGestureRecognizer) -> Self {
+    public func addGesture(_ recognizer: UIGestureRecognizer) -> Self {
         addGestureRecognizer(recognizer)
         return self
     }
@@ -121,8 +122,8 @@ extension UIView: UIGestureRecognizerDelegate {
         print("This is UILongPressGestureRecognizer")
      }
      */
-    /// 设置自定义手势
-    func setGesture(recognizers: [UIGestureRecognizer] = [UITapGestureRecognizer()], action: @escaping CustomGestureClosure) {
+    /// Moisture: 设置自定义手势
+    public func setGesture(recognizers: [UIGestureRecognizer] = [UITapGestureRecognizer()], action: @escaping CustomGestureClosure) {
         objc_setAssociatedObject(self, &GestureClosure_Key, GestureClosureWrapper(closure: action), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         for recognizer in recognizers {
             addGestureRecognizer(recognizer)
@@ -134,7 +135,7 @@ extension UIView: UIGestureRecognizerDelegate {
         (objc_getAssociatedObject(self, &GestureClosure_Key) as? GestureClosureWrapper)?.closure(sender)
     }
     
-    /// 添加滑动拖拽手势 (X轴)
+    /// Moisture: 添加滑动拖拽手势 (X轴)
     ///   - swipeThreshold: 临界值(滑动阈值)
     func addSlideable_X(swipeThreshold: CGFloat = 210.0, _ slideHandle: ((SwipeDirection.horizontal) -> Void)?) {
         self.swipeThreshold = swipeThreshold
@@ -195,7 +196,7 @@ extension UIView: UIGestureRecognizerDelegate {
 
     }
     
-    /// 添加滑动拖拽手势 (Y轴)
+    /// Moisture: 添加滑动拖拽手势 (Y轴)
     ///   - swipeThreshold: 临界值(滑动阈值)
     func addSlideable_Y(swipeThreshold: CGFloat = 336.0, _ slideHandle: ((SwipeDirection.vertical) -> Void)?) {
         self.swipeThreshold = swipeThreshold
@@ -257,9 +258,9 @@ extension UIView: UIGestureRecognizerDelegate {
     }
     
     
-    /// 添加拖拽跟随手势
+    /// Moisture: 添加拖拽跟随手势
     /// - Parameter allowOutOfBounds: 是否允许视图超出屏幕边界，默认为 true
-    func addDraggable(isAllowOutOfBounds: Bool = true) {
+    public func addDraggable(isAllowOutOfBounds: Bool = true) {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanDragging(_:)))
         panGesture.delegate = self // 添加此行以处理手势识别器冲突
         self.addGestureRecognizer(panGesture)
@@ -291,7 +292,7 @@ extension UIView: UIGestureRecognizerDelegate {
         sender.setTranslation(.zero, in: targetView.superview)
     }
     
-    // 解决手势冲突
+    // Moisture: 解决手势冲突
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
@@ -304,12 +305,21 @@ extension UIView {
 
     /*
      解释：为什么动画结束后返回原状态？
-     首先我们需要搞明白一点的是，layer动画运行的过程是怎样的？其实在我们给一个视图添加layer动画时，真正移动并不是我们的视图本身，而是 presentation layer 的一个缓存。动画开始时 presentation layer开始移动，原始layer隐藏，动画结束时，presentation layer从屏幕上移除，原始layer显示。这就解释了为什么我们的视图在动画结束后又回到了原来的状态，因为它根本就没动过。
+     首先我们需要搞明白一点的是，layer动画运行的过程是怎样的？
+     其实在我们给一个视图添加layer动画时，真正移动并不是我们的视图本身，而是 presentation layer 的一个缓存。
+     动画开始时 presentation layer开始移动，原始layer隐藏，动画结束时，presentation layer从屏幕上移除，原始layer显示。
+     这就解释了为什么我们的视图在动画结束后又回到了原来的状态，因为它根本就没动过。
+     Explanation: Why does the animation return to its original state after it finishes?
+     First, we need to understand how the layer animation works.
+     Actually, when we add a layer animation to a view, it’s not the view itself that moves, but a cached version of the presentation layer.
+     When the animation starts, the presentation layer moves, and the original layer is hidden. When the animation ends, the presentation layer is removed from the screen, and the original layer is shown.
+     This explains why the view returns to its original state after the animation finishes—it hasn't actually moved.
      */
 
     
     // MARK: - Basic Animation Single
 
+    /// Moisture: 添加基本​​动画 / Add Basic Animation
     func addBasicAnimation(keyPath: String, fromValue: Any?, toValue: Any?, duration: TimeInterval, timingFunction: CAMediaTimingFunctionName, key: String, completion: (() -> Void)? = nil) {
         let animation = CABasicAnimation(keyPath: keyPath)
         // 动画初始值
@@ -344,6 +354,7 @@ extension UIView {
     
     // MARK: - Keyframe Animation Single
     
+    /// Moisture: 添加关键帧动画 / Add Keyframe Animation
     func addKeyframeAnimation(keyPath: String, values: [Any], keyTimes: [NSNumber], duration: TimeInterval, timingFunction: [CAMediaTimingFunctionName], key: String, completion: (() -> Void)? = nil) {
         let animation = CAKeyframeAnimation(keyPath: keyPath)
         // 动画初始值
@@ -377,7 +388,7 @@ extension UIView {
     
     // MARK: - Animation Group
 
-    func animate(with key: String = UUID().uuidString, repeatCount: Float = 1, timingFunction: CustomTimingFunction = .easeInOut) -> AnimationHelper {
+    func animate(with key: String = UUID().uuidString, repeatCount: Float = 1, timingFunction: MediaTimingFunction = .easeInOut) -> AnimationHelper {
         return AnimationHelper(view: self, key: key, repeatCount: repeatCount, timingFunction: timingFunction)
     }
     
@@ -386,30 +397,31 @@ extension UIView {
 // 动画类型
 enum AnimationProcessType {
     case basic(fromValue: Any, toValue: Any)
-    case keyframes(value: [Any], keyTimes: [NSNumber], timingFunction: [CustomTimingFunction])
+    case keyframes(value: [Any], keyTimes: [NSNumber], timingFunction: [MediaTimingFunction])
 }
 
 class AnimationHelper {
     private let view: UIView
     private let key: String
     private let repeatCount: Float //HUGE 表示不停重复
-    private let timingFunction: CustomTimingFunction
-    private var animations: [CAAnimation] = []
+    private let timingFunction: MediaTimingFunction
+    private var animationPool: [CAAnimation] = []
     
-    init(view: UIView, key: String, repeatCount: Float, timingFunction: CustomTimingFunction) {
+    init(view: UIView, key: String, repeatCount: Float, timingFunction: MediaTimingFunction) {
         self.view = view
         self.key = key
         self.repeatCount = repeatCount
         self.timingFunction = timingFunction
     }
     
+    /// Moisture: 添加动画到动画池 / Add animation to the animation pool
     @discardableResult
     func addAnimation(_ animation: CAAnimation) -> AnimationHelper {
-        animations.append(animation)
+        animationPool.append(animation)
         return self
     }
     
-    // 添加基本动画
+    /// Moisture: 添加基本动画 / Add basic animation
     private func addAnimation(keyPath: String, animationType: AnimationProcessType, duration: TimeInterval) {
         switch animationType {
         case .basic(let fromValue, let toValue):
@@ -428,48 +440,49 @@ class AnimationHelper {
         }
     }
     
-    /// 渐变效果
+    /// Moisture: 渐变效果 / Fade effect
     @discardableResult
     func gradient(animationType: AnimationProcessType, duration: TimeInterval) -> AnimationHelper {
         addAnimation(keyPath: "opacity", animationType: animationType, duration: duration)
         return self
     }
 
-    /// 缩放效果
+    /// Moisture: 缩放效果 / Scaling effect
     @discardableResult
     func scale(animationType: AnimationProcessType, duration: TimeInterval) -> AnimationHelper {
         addAnimation(keyPath: "transform.scale", animationType: animationType, duration: duration)
         return self
     }
 
-    /// 移动效果
+    /// Moisture: 移动效果 / Position effect
     @discardableResult
     func position(animationType: AnimationProcessType, duration: TimeInterval) -> AnimationHelper {
         addAnimation(keyPath: "position", animationType: animationType, duration: duration)
         return self
     }
 
-    /// 旋转效果
+    /// Moisture: 旋转效果 / Rotation effect
     @discardableResult
     func rotate(animationType: AnimationProcessType, duration: TimeInterval) -> AnimationHelper {
         addAnimation(keyPath: "transform.rotation.z", animationType: animationType, duration: duration)
         return self
     }
     
-    // 同时播放组合中的所有动画
+    /// Moisture: 同时播放所有动画 / Play all animations concurrently
     @discardableResult
     func playConcurrency(completion: (() -> Void)? = nil) -> AnimationHelper {
-        play(animations: animations, completion: completion)
+        play(animations: animationPool, completion: completion)
         return self
     }
     
-    // 依次播放组合中的所有动画
+    /// Moisture: 依次播放所有动画 / Play all animations sequentially
     @discardableResult
     func playSerial(completion: (() -> Void)? = nil) -> AnimationHelper {
-        play(animations: animations, sequentially: true, completion: completion)
+        play(animations: animationPool, sequentially: true, completion: completion)
         return self
     }
     
+    // 播放动画，支持并行或串行播放 / Play animations, supporting concurrency or serial execution
     private func play(animations: [CAAnimation], sequentially: Bool = false, completion: (() -> Void)?) {
         let group = CAAnimationGroup()
         group.animations = animations
@@ -506,7 +519,7 @@ class AnimationHelper {
 
 // MARK: - CAMediaTimingFunctionName Enum (缓动函数)
 
-enum CustomTimingFunction {
+enum MediaTimingFunction {
     case linear
     case easeIn
     case easeOut
@@ -531,6 +544,8 @@ enum CustomTimingFunction {
 
 
 public extension UIView {
+    
+    /// Moisture: 添加圆角 / Add Round
     func roundCorners(corners: UIRectCorner, radius: CGFloat) {
         let maskPath = UIBezierPath(roundedRect: bounds,
                                     byRoundingCorners: corners,
@@ -543,11 +558,13 @@ public extension UIView {
         layer.mask = maskLayer
     }
     
+    /// Moisture: 添加边框 / Add Border
     func addBorder(width: CGFloat, color: UIColor) {
         layer.borderWidth = width
         layer.borderColor = color.cgColor
     }
     
+    /// Moisture: 添加阴影 / Add Shadow
     func addShadow(color: UIColor, opacity: Float, radius: CGFloat, offset: CGSize) {
         layer.shadowColor = color.cgColor
         layer.shadowOpacity = opacity
@@ -555,6 +572,7 @@ public extension UIView {
         layer.shadowOffset = offset
     }
     
+    /// Moisture: 添加渐变 / Add Gradient
     func applyGradient(colors: [UIColor], startPoint: CGPoint, endPoint: CGPoint) {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = bounds
@@ -571,7 +589,7 @@ public extension UIView {
 
 public extension UIView {
     
-    /// 划线
+    /// Moisture: 划线 / Add Line
     func underline(_ direction: LineDirection, lineWidth: CGFloat, color: UIColor, inset: CGFloat, equal: LineEqualTo) {
         line(direction, lineWidth: lineWidth, color: color, inset: inset, equal: equal)
     }

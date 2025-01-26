@@ -3,6 +3,9 @@ import UIKit
 
 public protocol AppPort {
         
+    func openURL(_ url: URL, failureCallback: NullHandler?)
+    
+    
     func openURL(_ string: String, failureCallback: NullHandler?)
     
     
@@ -12,8 +15,8 @@ public protocol AppPort {
 
 public extension AppPort {
     
-    /// 打开URL
-    private func openURL(_ url: URL, failureCallback: NullHandler? = nil) {
+    /// Moisture: 打开URL（URL） / Open URL
+    func openURL(_ url: URL, failureCallback: NullHandler? = nil) {
         if #available(iOS 10, *) {
             
             UIApplication.shared.open(url, options: [:]) { isOpen in
@@ -34,7 +37,7 @@ public extension AppPort {
         }
     }
     
-    /// 打开URL
+    /// Moisture: 打开URL （String）/ Open URL
     func openURL(_ string: String, failureCallback: NullHandler? = nil) {
         
         if let url = URL(string: string), let scheme = url.scheme, let host = url.host {
@@ -45,7 +48,7 @@ public extension AppPort {
         }
     }
     
-    /// 粘贴板
+    /// Moisture: 粘贴板 / Pasteboard
     func pasteboard(_ string: String, succcessGeneralCallback: BlockHandler<String>? = nil) {
     #if DEBUG
     #if targetEnvironment(simulator)

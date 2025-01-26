@@ -1,14 +1,14 @@
 import UIKit
 
 
-protocol SafeMod {}
+public protocol SafeMods {}
 
 
 // MARK: - 处理后的安全值 (items/item)
 
-extension SafeMod {
+public extension SafeMods {
     
-    /// 对数组元素 (索引) 进行安全检查, 并执行闭包
+    /// Moisture: 对数组元素 (索引) 进行安全检查, 并执行闭包
     func hasSafeCollection<T>(index: Int, items: [T], closure: (T) -> Void) {
         guard let element = items[safe: index], index >= 0, index < items.count else {
             // 索引越界 处理无效的索引情况
@@ -17,7 +17,7 @@ extension SafeMod {
         closure(element)
     }
     
-    /// 对字典元素 (键) 进行安全检查, 并执行闭包
+    /// Moisture: 对字典元素 (键) 进行安全检查, 并执行闭包
     func hasSafeDictionaryKey<Key, Value>(key: Key, dictionary: [Key: Value], closure: (Value) -> Void) {
         guard let value = dictionary[key] else {
             // 键不存在 处理无效的键情况
@@ -26,7 +26,7 @@ extension SafeMod {
         closure(value)
     }
     
-    /// 对字符串元素 (索引) 进行安全检查, 并执行闭包
+    /// Moisture: 对字符串元素 (索引) 进行安全检查, 并执行闭包
     func hasSafeString(index: Int, string: String, closure: (Character) -> Void) {
         guard let element = string[safe: index] else {
             // 索引越界 处理无效的索引情况
@@ -35,7 +35,7 @@ extension SafeMod {
         closure(element)
     }
     
-    /// 对URL字符串进行安全检查, 并执行闭包
+    /// Moisture: 对URL字符串进行安全检查, 并执行闭包
     func hasSafeURL(urlString: String, closure: (String) -> Void) {
         // 尝试创建URL实例
         guard let url = URL(string: urlString) else {
@@ -75,14 +75,14 @@ extension SafeMod {
 
 
 // Extension to provide a safe subscript for arrays
-extension Collection {
+public extension Collection {
     subscript(safe index: Index) -> Element? {
         return indices.contains(index) ? self[index] : nil
     }
 }
 
 // Extension to provide a safe subscript for strings
-extension String {
+public extension String {
     subscript(safe index: Index) -> Character? {
         return indices.contains(index) ? self[index] : nil
     }
@@ -91,16 +91,17 @@ extension String {
 
 // MARK: - 检验是否安全 (BOOL)
 
-extension SafeMod {
+public extension SafeMods {
 
 }
 
 
 // MARK: - 检验UI操作安全
 
-extension UIView: SafeMod {
+extension UIView: SafeMods {
     
-    func ensureAddedToSuperview() {
+    /// Moisture: 确保添加到超级视图 / ensureAddedToSuperview
+    public func ensureAddedToSuperview() {
         guard self.superview != nil else {
             assertionFailure("Error: The view has not been added to a superview.")
             return

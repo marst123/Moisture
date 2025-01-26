@@ -8,28 +8,28 @@ public extension NSMutableAttributedString {
     //MARK: - convenience init
     
     /// 重写init 支持PSAttributedMode
-    convenience init(string: String, attribute: Flower_AttributedState) {
+    convenience init(string: String, attribute: AttributedState) {
         self.init(string: string, attributes: [attribute])
     }
     
     /// 重写init 支持[PSAttributedMode]
-    convenience init(string: String, attributes: [Flower_AttributedState]) {
+    convenience init(string: String, attributes: [AttributedState]) {
         self.init(string: string, attributes: attributes.reduce([:], { $1.fill(in: $0) }))
     }
 
     
     //MARK: - 添加富文本样式 (指定范围)
     
-    /// 在指定的范围内应用单个样式
+    /// Moisture: 在指定的范围内应用单个样式
     @discardableResult
-    func rangeStyle(_ state: Flower_AttributedState = .none, range: NSRange) -> NSMutableAttributedString {
+    func rangeStyle(_ state: AttributedState = .none, range: NSRange) -> NSMutableAttributedString {
         addAttributes(state.value, range: range)
         return self
     }
 
-    /// 在指定的范围内应用多个样式
+    /// Moisture: 在指定的范围内应用多个样式
     @discardableResult
-    func rangeStyles(_ states: [Flower_AttributedState], range: NSRange) -> Self {
+    func rangeStyles(_ states: [AttributedState], range: NSRange) -> Self {
         addAttributes(states.reduce([:], { $1.fill(in: $0) }), range: range)
         return self
     }
@@ -37,23 +37,23 @@ public extension NSMutableAttributedString {
     
     //MARK: - 添加富文本样式
     
-    /// 追加不带样式字符串
+    /// Moisture: 追加不带样式字符串
     @discardableResult
     func append(string: String) -> Self {
         append(NSMutableAttributedString(string: string, attribute: .none))
         return self
     }
     
-    /// 追加带有样式的字符串
+    /// Moisture: 追加带有样式的字符串
     @discardableResult
-    func appendStyle(_ stste: Flower_AttributedState, string: String) -> Self {
+    func appendStyle(_ stste: AttributedState, string: String) -> Self {
         append(NSMutableAttributedString(string: string, attribute: stste))
         return self
     }
     
-    /// 追加带有多个样式的字符串
+    /// Moisture: 追加带有多个样式的字符串
     @discardableResult
-    func appendStyles(_ states: [Flower_AttributedState], string: String) -> Self {
+    func appendStyles(_ states: [AttributedState], string: String) -> Self {
         append(NSMutableAttributedString(string: string, attributes: states.reduce([:], { $1.fill(in: $0) })))
         return self
     }
@@ -63,7 +63,7 @@ public extension NSMutableAttributedString {
 
 //MARK: - 富文本样式枚举
 
-public enum Flower_AttributedState {
+public enum AttributedState {
     
     case font(UIFont)                                   //  字体
     
@@ -146,8 +146,8 @@ public enum Flower_AttributedState {
 
 extension NSAttributedString {
     
-    /// 字符高度
-    func textHeight(constrainedTo width: CGFloat) -> CGFloat {
+    /// Moisture: 计算文本高度 / Calculate text height
+    func calculateTextHeight(constrainedTo width: CGFloat) -> CGFloat {
         let maxSize = CGSize(width: width, height: .greatestFiniteMagnitude)
         let textRect = boundingRect(with: maxSize, options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil)
         return ceil(textRect.height)

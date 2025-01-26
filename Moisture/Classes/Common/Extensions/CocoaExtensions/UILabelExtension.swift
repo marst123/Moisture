@@ -46,7 +46,7 @@ public extension UILabel {
 
 public extension UILabel {
 
-    // 存储可点击文本
+    /// Moisture: 存储可点击文本
     private var actionsDictionary: [String: () -> Void]? {
         get {
             return objc_getAssociatedObject(self, &AssociatedKeys.actionsDictionary) as? [String: () -> Void]
@@ -73,7 +73,7 @@ public extension UILabel {
         }
     }
     
-    // 获取点击位置的字符索引
+    /// Moisture: 获取点击位置的字符索引
     private func characterIndex(at point: CGPoint) -> Int {
         guard let attributedText = self.attributedText else {
             return NSNotFound
@@ -102,7 +102,7 @@ public extension UILabel {
         }
     }
     
-    /// 添加指定字符串的用户事件
+    /// Moisture: 添加指定字符串的用户事件
     func addClickableText(_ text: String, highlightColor: UIColor? = nil, action: @escaping () -> Void) {
         var attributedString = self.attributedText ?? NSAttributedString(string: self.text ?? "")
         let range = (attributedString.string as NSString).range(of: text)
@@ -130,7 +130,7 @@ public extension UILabel {
 
 public extension NSAttributedString {
     
-    /// 被指定的text高亮显示
+    /// Moisture: 指定的text高亮显示
     func highlighting(range: NSRange, highlightColor: UIColor) -> NSMutableAttributedString {
         let mutableAttributedString = NSMutableAttributedString(attributedString: self)
         mutableAttributedString.addAttributes([NSAttributedString.Key.foregroundColor: highlightColor,

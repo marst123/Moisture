@@ -6,7 +6,7 @@ import Foundation
 
 public extension Dictionary {
     
-    
+    /// Moisture: 字典转URL拼接 / Dictionary to URL concatenation
     var toURLQueryString: String {
         let queryItems = self.map { key, value in
             URLQueryItem(name: "\(key)", value: "\(value)")

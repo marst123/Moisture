@@ -5,13 +5,13 @@ import UIKit
 // MARK: - 定义名称(Name)
 
 public extension String {
-    /// 系统页面的URL定义
+    /// Moisture: 系统页面的URL定义
     struct SystemURLStrings {}
     
-    /// 外部链接的URL定义
+    /// Moisture: 外部链接的URL定义
     struct ExternalURLStrings {}
     
-    /// 正则表达式名称
+    /// Moisture: 正则表达式名称
     struct MatchesNameStrings {}
 
 }
@@ -171,10 +171,12 @@ public extension String {
 
 extension String: AppPort {
     
+    /// Moisture: 打开URL
     public func openURL(_ callback: NullHandler? = nil) {
         openURL(self, failureCallback: callback)
     }
     
+    /// Moisture: 粘贴板
     public func pasteboard(_ callback: BlockHandler<String>? = nil) {
         pasteboard(self, succcessGeneralCallback: callback)
     }
@@ -185,7 +187,7 @@ extension String: AppPort {
 // MARK: - 计算(Calculate) 增删改查
 
 public extension String {
-    // 从头开始提取指定字符串
+    /// Moisture: 从头开始提取指定字符串
     func substring(toSubstring substring: String) -> String? {
         guard let range = self.range(of: substring) else {
             return nil
@@ -193,7 +195,7 @@ public extension String {
         return String(self[..<range.upperBound])
     }
     
-    // 从尾开始提取指定字符串
+    /// Moisture: 从尾开始提取指定字符串
     func substring(fromSubstring substring: String) -> String? {
         guard let range = self.range(of: substring, options: .backwards) else {
             return nil
@@ -201,7 +203,7 @@ public extension String {
         return String(self[range.lowerBound...])
     }
     
-    // 提取指定位置的字符串宽度
+    /// Moisture: 提取指定位置的字符串宽度
     func substring(atIndex index: Int, width: Int) -> String? {
         guard index >= 0 && index < count && width > 0 else {
             return nil
@@ -211,7 +213,7 @@ public extension String {
         return String(self[startIndex..<endIndex])
     }
     
-    // 从指定字符开始提取字符串宽度
+    /// Moisture: 从指定字符开始提取字符串宽度
     func substring(fromCharacter character: Character, width: Int) -> String? {
         guard let startIndex = self.firstIndex(of: character) else {
             return nil
@@ -220,37 +222,37 @@ public extension String {
         return String(self[startIndex..<endIndex])
     }
     
-    // 分割字符串
+    /// Moisture: 分割字符串
     func split(by separator: String) -> [String] {
         return self.components(separatedBy: separator)
     }
     
-    // 删除首尾空格和换行符
+    /// Moisture: 删除首尾空格和换行符
     func trim() -> String {
         return self.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
-    // 修剪字符
+    /// Moisture: 修剪字符
     func trimmed(style set: CharacterSet) -> Self {
         return self.trimmingCharacters(in: set)
     }
     
-    // 替换字符串
+    /// Moisture: 替换字符串
     func replace(of target: String, with replacement: String) -> String {
         return self.replacingOccurrences(of: target, with: replacement)
     }
     
-    // 换行字符
+    /// Moisture: 换行字符
     func nextLine(_ newLine: String) -> String {
         return self + "\n" + newLine
     }
     
-    // 写重复字符串
+    /// Moisture: 写重复字符串
     func repeated(_ count: Int) -> String {
         return String(repeating: self, count: count)
     }
     
-    // 清理转义字符
+    /// Moisture: 清理转义字符
     func cleanEscapes() -> String {
         let cleanedString = self.unicodeScalars
             .filter { $0 != "\\" }
@@ -259,12 +261,12 @@ public extension String {
         return cleanedString
     }
     
-    // 判断是否包含子字符串
+    /// Moisture: 判断是否包含子字符串
     func contains(_ substring: String) -> Bool {
         return self.range(of: substring) != nil
     }
     
-    // 正则表达式匹配 - NSRegularExpression
+    /// Moisture: 正则表达式匹配 - NSRegularExpression
     func matches(regex: String) -> Bool {
         do {
             let regex = try NSRegularExpression(pattern: regex)
@@ -276,7 +278,7 @@ public extension String {
         }
     }
     
-    // 正则表达式匹配 - NSPredicate
+    /// Moisture: 正则表达式匹配 - NSPredicate
     func matches(pattern: String) -> Bool {
         return NSPredicate(format: "SELF MATCHES %@", pattern).evaluate(with: self)
     }
@@ -289,8 +291,8 @@ public extension String {
 
 public extension String {
     
-    /// Get.字符占用高度
-    func getHeight(withFont font: UIFont, constrainedToWidth width: CGFloat, lineSpacing: CGFloat) -> CGFloat {
+    /// Moisture: 计算字符占用高度
+    func calculateHeight(withFont font: UIFont, constrainedToWidth width: CGFloat, lineSpacing: CGFloat) -> CGFloat {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = lineSpacing
 
@@ -307,8 +309,8 @@ public extension String {
     }
     
     
-    /// Get.字符占用宽度
-    func getWidth(forFont font: UIFont) -> CGFloat {
+    /// Moisture: 计算字符占用宽度
+    func calculateWidth(forFont font: UIFont) -> CGFloat {
         let attributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: font]
         let textSize = (self as NSString).size(withAttributes: attributes)
         return textSize.width

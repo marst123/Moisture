@@ -5,7 +5,7 @@ import UIKit
 
 extension UIButton {
     
-    /// 设置UIButton image的大小
+    /// Moisture: 设置UIButton image的大小 / Set UIButton image size
     func setImageSize(_ size: CGSize, for state: UIControl.State = .normal) {
         if let currentImage = self.image(for: state) {
             // 创建一个新的图像上下文，大小为指定的大小
@@ -34,8 +34,8 @@ extension UIButton {
 
 public extension UIButton {
     
-    /// 控制Button内容布局
-    func layoutEdges(style: ButtonEdgeInsetsStyle, space:CGFloat) {
+    /// Moisture: 控制Button内容布局 / Adjust button content layout
+    func edgeLayout(_ style: ButtonEdgeInsetsStyle, space:CGFloat) {
     
         //top、left、bottom、right
 
@@ -129,16 +129,16 @@ public extension UIButton {
 
 public enum ButtonEdgeInsetsStyle {
     
-    /// image 在上，label 在下
+    /// Moisture: image 在上，label 在下 / Image on top, label on bottom
     case imageTop
     
-    /// image 在下，label 在上
+    /// Moisture: image 在下，label 在上 / Image on bottom, label on top
     case imageBottom
     
-    /// image 在左，label 在右
+    /// Moisture: image 在左，label 在右 / Image on left, label on right
     case imageLeft
     
-    /// image 在右，label 在左
+    /// Moisture: image 在右，label 在左 / Image on right, label on left
     case imageRight
 }
 
