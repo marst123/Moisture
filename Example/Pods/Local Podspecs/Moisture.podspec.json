@@ -1,6 +1,6 @@
 {
   "name": "Moisture",
-  "version": "0.1.003",
+  "version": "0.1.005",
   "summary": "Personal base library supporting Swift syntax.",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/marst123/Moisture",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/marst123/Moisture.git",
-    "tag": "0.1.003"
+    "tag": "0.1.005"
   },
   "swift_versions": [
     "5.0"
