@@ -143,8 +143,8 @@ public extension String {
         return UIImage(named: self)
     }
     
-    func toColor(with color: String, alpha: CGFloat = 1) -> UIColor? {
-        return UIColor.hex(color, alpha: alpha)
+    func toColor(alpha: CGFloat = 1) -> UIColor? {
+        return UIColor.hex(self, alpha: alpha)
     }
     
     func toResourceFileURL(with ext: String) -> URL? {

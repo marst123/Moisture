@@ -1,5 +1,5 @@
 import UIKit
-
+import ObjectiveC.runtime
 
 
 private var AddImage_Key: UInt8 = 0
@@ -58,7 +58,7 @@ public extension UIView {
 
 // MARK: - UIGestureRecognizer (自定义手势)
 
-extension UIView: UIGestureRecognizerDelegate {
+extension UIView: @retroactive UIGestureRecognizerDelegate {
     
     private struct AssociatedKeys {
         static var isAllowOutOfBounds = "isAllowOutOfBounds"
@@ -137,7 +137,7 @@ extension UIView: UIGestureRecognizerDelegate {
     
     /// Moisture: 添加滑动拖拽手势 (X轴)
     ///   - swipeThreshold: 临界值(滑动阈值)
-    func addSlideable_X(swipeThreshold: CGFloat = 210.0, _ slideHandle: ((SwipeDirection.horizontal) -> Void)?) {
+    public func addSlideable_X(swipeThreshold: CGFloat = 210.0, _ slideHandle: ((SwipeDirection.horizontal) -> Void)?) {
         self.swipeThreshold = swipeThreshold
         
         let panGesture = UIPanGestureRecognizer()
@@ -198,7 +198,7 @@ extension UIView: UIGestureRecognizerDelegate {
     
     /// Moisture: 添加滑动拖拽手势 (Y轴)
     ///   - swipeThreshold: 临界值(滑动阈值)
-    func addSlideable_Y(swipeThreshold: CGFloat = 336.0, _ slideHandle: ((SwipeDirection.vertical) -> Void)?) {
+    public func addSlideable_Y(swipeThreshold: CGFloat = 336.0, _ slideHandle: ((SwipeDirection.vertical) -> Void)?) {
         self.swipeThreshold = swipeThreshold
         
         let panGesture = UIPanGestureRecognizer()
@@ -301,7 +301,7 @@ extension UIView: UIGestureRecognizerDelegate {
 
 // MARK: - CABasicAnimation基础动效 (keyPath)
 
-extension UIView {
+public extension UIView {
 
     /*
      解释：为什么动画结束后返回原状态？
@@ -388,19 +388,19 @@ extension UIView {
     
     // MARK: - Animation Group
 
-    func animate(with key: String = UUID().uuidString, repeatCount: Float = 1, timingFunction: MediaTimingFunction = .easeInOut) -> AnimationHelper {
-        return AnimationHelper(view: self, key: key, repeatCount: repeatCount, timingFunction: timingFunction)
+    func animate(with key: String = UUID().uuidString, repeatCount: Float = 1, timingFunction: MediaTimingFunction = .easeInOut) -> AnimationPool {
+        return AnimationPool(view: self, key: key, repeatCount: repeatCount, timingFunction: timingFunction)
     }
     
 }
 
 // 动画类型
-enum AnimationProcessType {
+public enum AnimationProcessType {
     case basic(fromValue: Any, toValue: Any)
     case keyframes(value: [Any], keyTimes: [NSNumber], timingFunction: [MediaTimingFunction])
 }
 
-class AnimationHelper {
+public class AnimationPool {
     private let view: UIView
     private let key: String
     private let repeatCount: Float //HUGE 表示不停重复
@@ -416,7 +416,7 @@ class AnimationHelper {
     
     /// Moisture: 添加动画到动画池 / Add animation to the animation pool
     @discardableResult
-    func addAnimation(_ animation: CAAnimation) -> AnimationHelper {
+    func addAnimation(_ animation: CAAnimation) -> AnimationPool {
         animationPool.append(animation)
         return self
     }
@@ -442,42 +442,42 @@ class AnimationHelper {
     
     /// Moisture: 渐变效果 / Fade effect
     @discardableResult
-    func gradient(animationType: AnimationProcessType, duration: TimeInterval) -> AnimationHelper {
+    func gradient(animationType: AnimationProcessType, duration: TimeInterval) -> AnimationPool {
         addAnimation(keyPath: "opacity", animationType: animationType, duration: duration)
         return self
     }
 
     /// Moisture: 缩放效果 / Scaling effect
     @discardableResult
-    func scale(animationType: AnimationProcessType, duration: TimeInterval) -> AnimationHelper {
+    func scale(animationType: AnimationProcessType, duration: TimeInterval) -> AnimationPool {
         addAnimation(keyPath: "transform.scale", animationType: animationType, duration: duration)
         return self
     }
 
     /// Moisture: 移动效果 / Position effect
     @discardableResult
-    func position(animationType: AnimationProcessType, duration: TimeInterval) -> AnimationHelper {
+    func position(animationType: AnimationProcessType, duration: TimeInterval) -> AnimationPool {
         addAnimation(keyPath: "position", animationType: animationType, duration: duration)
         return self
     }
 
     /// Moisture: 旋转效果 / Rotation effect
     @discardableResult
-    func rotate(animationType: AnimationProcessType, duration: TimeInterval) -> AnimationHelper {
+    func rotate(animationType: AnimationProcessType, duration: TimeInterval) -> AnimationPool {
         addAnimation(keyPath: "transform.rotation.z", animationType: animationType, duration: duration)
         return self
     }
     
     /// Moisture: 同时播放所有动画 / Play all animations concurrently
     @discardableResult
-    func playConcurrency(completion: (() -> Void)? = nil) -> AnimationHelper {
+    func playConcurrency(completion: (() -> Void)? = nil) -> AnimationPool {
         play(animations: animationPool, completion: completion)
         return self
     }
     
     /// Moisture: 依次播放所有动画 / Play all animations sequentially
     @discardableResult
-    func playSerial(completion: (() -> Void)? = nil) -> AnimationHelper {
+    func playSerial(completion: (() -> Void)? = nil) -> AnimationPool {
         play(animations: animationPool, sequentially: true, completion: completion)
         return self
     }
@@ -519,14 +519,14 @@ class AnimationHelper {
 
 // MARK: - CAMediaTimingFunctionName Enum (缓动函数)
 
-enum MediaTimingFunction {
+public enum MediaTimingFunction {
     case linear
     case easeIn
     case easeOut
     case easeInOut
     case custom(c1x: Float, c1y: Float, c2x: Float, c2y: Float)
     
-    var media: CAMediaTimingFunction {
+    public var media: CAMediaTimingFunction {
         switch self {
         case .linear:
             return CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
@@ -669,11 +669,11 @@ public enum LineEqualTo {
 // MARK: - 手势滑动方向
 
 public enum SwipeDirection {
-    enum horizontal {
+    public enum horizontal {
         case left
         case right
     }
-    enum vertical {
+    public enum vertical {
         case up
         case down
     }
