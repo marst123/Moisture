@@ -1,7 +1,7 @@
 PODS:
   - Differentiator (5.0.0)
-  - Moisture/Common (0.1.005)
-  - Moisture/Rx (0.1.005):
+  - Moisture/Common (0.1.006)
+  - Moisture/Rx (0.1.006):
     - Moisture/Common
     - RxCocoa
     - RxDataSources
@@ -39,7 +39,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
-  Moisture: 124995d08f87cc8d03fa90ed98a9fca1c350d638
+  Moisture: c7fdb1971ace9bf01e967f0f251a4e5789d3e5c0
   RxCocoa: 2d33c1e1e5d66492052ad46b11024ae287572880
   RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
   RxGesture: f3efb47ed2d26a8082f7b660d4a59970e275a7f8

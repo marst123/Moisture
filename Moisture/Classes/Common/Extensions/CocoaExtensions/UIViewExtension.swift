@@ -388,8 +388,8 @@ public extension UIView {
     
     // MARK: - Animation Group
 
-    func animate(with key: String = UUID().uuidString, repeatCount: Float = 1, timingFunction: MediaTimingFunction = .easeInOut) -> AnimationPool {
-        return AnimationPool(view: self, key: key, repeatCount: repeatCount, timingFunction: timingFunction)
+    func animate(with key: String = UUID().uuidString, repeatCount: Float = 1, timingFunction: MediaTimingFunction = .easeInOut) -> AnimationGroup {
+        return AnimationGroup(view: self, key: key, repeatCount: repeatCount, timingFunction: timingFunction)
     }
     
 }
@@ -400,12 +400,12 @@ public enum AnimationProcessType {
     case keyframes(value: [Any], keyTimes: [NSNumber], timingFunction: [MediaTimingFunction])
 }
 
-public class AnimationPool {
+public class AnimationGroup {
     private let view: UIView
     private let key: String
     private let repeatCount: Float //HUGE 表示不停重复
     private let timingFunction: MediaTimingFunction
-    private var animationPool: [CAAnimation] = []
+    private var animations: [CAAnimation] = []
     
     init(view: UIView, key: String, repeatCount: Float, timingFunction: MediaTimingFunction) {
         self.view = view
@@ -416,8 +416,8 @@ public class AnimationPool {
     
     /// Moisture: 添加动画到动画池 / Add animation to the animation pool
     @discardableResult
-    func addAnimation(_ animation: CAAnimation) -> AnimationPool {
-        animationPool.append(animation)
+    func addAnimation(_ animation: CAAnimation) -> AnimationGroup {
+        animations.append(animation)
         return self
     }
     
@@ -442,43 +442,43 @@ public class AnimationPool {
     
     /// Moisture: 渐变效果 / Fade effect
     @discardableResult
-    func gradient(animationType: AnimationProcessType, duration: TimeInterval) -> AnimationPool {
+    func gradient(animationType: AnimationProcessType, duration: TimeInterval) -> AnimationGroup {
         addAnimation(keyPath: "opacity", animationType: animationType, duration: duration)
         return self
     }
 
     /// Moisture: 缩放效果 / Scaling effect
     @discardableResult
-    func scale(animationType: AnimationProcessType, duration: TimeInterval) -> AnimationPool {
+    func scale(animationType: AnimationProcessType, duration: TimeInterval) -> AnimationGroup {
         addAnimation(keyPath: "transform.scale", animationType: animationType, duration: duration)
         return self
     }
 
     /// Moisture: 移动效果 / Position effect
     @discardableResult
-    func position(animationType: AnimationProcessType, duration: TimeInterval) -> AnimationPool {
+    func position(animationType: AnimationProcessType, duration: TimeInterval) -> AnimationGroup {
         addAnimation(keyPath: "position", animationType: animationType, duration: duration)
         return self
     }
 
     /// Moisture: 旋转效果 / Rotation effect
     @discardableResult
-    func rotate(animationType: AnimationProcessType, duration: TimeInterval) -> AnimationPool {
+    func rotate(animationType: AnimationProcessType, duration: TimeInterval) -> AnimationGroup {
         addAnimation(keyPath: "transform.rotation.z", animationType: animationType, duration: duration)
         return self
     }
     
     /// Moisture: 同时播放所有动画 / Play all animations concurrently
     @discardableResult
-    func playConcurrency(completion: (() -> Void)? = nil) -> AnimationPool {
-        play(animations: animationPool, completion: completion)
+    func playConcurrency(completion: (() -> Void)? = nil) -> AnimationGroup {
+        play(animations: animations, completion: completion)
         return self
     }
     
     /// Moisture: 依次播放所有动画 / Play all animations sequentially
     @discardableResult
-    func playSerial(completion: (() -> Void)? = nil) -> AnimationPool {
-        play(animations: animationPool, sequentially: true, completion: completion)
+    func playSerial(completion: (() -> Void)? = nil) -> AnimationGroup {
+        play(animations: animations, sequentially: true, completion: completion)
         return self
     }
     
